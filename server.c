@@ -6,7 +6,7 @@
 /*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 18:09:05 by rabril-h          #+#    #+#             */
-/*   Updated: 2025/03/12 10:03:37 by quentin          ###   ########.fr       */
+/*   Updated: 2025/03/12 16:12:27 by quentin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,16 @@ void signal_handler(int sig, siginfo_t *info, void *context)
 
     if (bit_index == 8)
     {
+        write(1, &c, 1);
+        
         if (c == '\0')
             write(1, "\n", 1);
-        else
-            write(1, &c, 1);
 
         bit_index = 0;
         c = 0;
+
+        kill(info->si_pid, SIGUSR1);
     }
-    kill(info->si_pid, SIGUSR1);
 }
 
 int main(void)
